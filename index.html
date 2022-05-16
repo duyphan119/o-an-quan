@@ -209,7 +209,7 @@
       const btnReplay = document.querySelector(".replay");
       const link = document.querySelector(".link");
       // constants
-      const TIME_PER_TURN = 120;
+      const TIME_PER_TURN = 30;
       const DIRECTION_LEFT = -1;
       const DIRECTION_RIGHT = 1;
 
@@ -734,6 +734,18 @@
       function printCountDown() {
         if (x % 2 === 0) {
           if (countDown === 0) {
+            clearInterval(timerId);
+            setTimeout(() => {
+              let msg = `${yourScore > myScore ? "MÁY" : "BẠN"} THẮNG`;
+              if (yourScore === myScore) {
+                if (sumArr(myBoard) > sumArr(yourBoard)) {
+                  msg = `BẠN THẮNG`;
+                } else {
+                  msg = `MÁY THẮNG`;
+                }
+              }
+              window.alert(msg);
+            }, 1000);
             countDown = TIME_PER_TURN;
           } else {
             countDown -= 1;
