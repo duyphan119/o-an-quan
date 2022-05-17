@@ -184,8 +184,8 @@
             Qua phải
           </button>
         </div>
-        <div>Lượt của: <span class="my-turn">Tôi</span></div>
-        <div>Điểm của tôi: <span class="my-score">0</span></div>
+        <div>Lượt của: <span class="my-turn">Bạn</span></div>
+        <div>Điểm của bạn: <span class="my-score">0</span></div>
         <div class="timer"><span>02:00</span></div>
         <div class="d-flex">
           <button class="replay">Chơi lại</button>&nbsp;&nbsp;
@@ -734,19 +734,16 @@
       function printCountDown() {
         if (x % 2 === 0) {
           if (countDown === 0) {
-            // clearInterval(timerId);
-            // setTimeout(() => {
-            //   let msg = `${yourScore > myScore ? "MÁY" : "BẠN"} THẮNG`;
-            //   if (yourScore === myScore) {
-            //     if (sumArr(myBoard) > sumArr(yourBoard)) {
-            //       msg = `BẠN THẮNG`;
-            //     } else {
-            //       msg = `MÁY THẮNG`;
-            //     }
-            //   }
-            //   window.alert(msg);
-            // }, 1000);
-            countDown = TIME_PER_TURN;
+            if (x !== 0) {
+              clearInterval(timerId);
+              if (myTurn) {
+                setTimeout(() => {
+                  window.alert("BẠN THUA");
+                }, 1000);
+              }
+            } else {
+              countDown = TIME_PER_TURN;
+            }
           } else {
             countDown -= 1;
           }
