@@ -231,6 +231,7 @@
       let isGoing = false;
       let myTurn = true;
       let x = 0;
+      let isRestart = false;
       window.onload = start;
 
       function start() {
@@ -247,6 +248,7 @@
           timerId = setInterval(play, 500);
           countDown = 0;
           countDownStart = true;
+
           printCountDown();
         });
         btnExit.addEventListener("click", function () {
@@ -257,6 +259,7 @@
           link.style.display = "block";
         });
         btnReplay.addEventListener("click", function () {
+          clearInterval(timerId);
           myBoard = new Array(5).fill(1).map((item) => 5);
           yourBoard = new Array(5).fill(1).map((item) => 5);
           count = 0;
@@ -264,10 +267,12 @@
           yourScore = 0;
           isGoing = false;
           myTurn = true;
+          isRestart = true;
           myScoreDOM.textContent = myScore;
           yourScoreDOM.textContent = yourScore;
-          timerId = setInterval(play, 500);
           x = 0;
+          cancelActiveAllCol();
+          cancelGo();
           countDownStart = true;
           isInMyBoard = true;
           countDown = TIME_PER_TURN;
@@ -277,6 +282,7 @@
           });
           mandarinLeft.textContent = 10;
           mandarinRight.textContent = 10;
+          printCountDown();
         });
         cols.forEach((col, index) => {
           col.addEventListener("click", function (e) {
@@ -326,6 +332,10 @@
         isGoing = true;
         setEnabled(false, [btnLeft, btnRight]);
         x = 0;
+        if (isRestart) {
+          timerId = setInterval(play, 500);
+        }
+        isRestart = false;
       }
 
       function play() {
